@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class UserPostIn(BaseModel):
@@ -18,6 +18,6 @@ class Comment(CommentIn):
     id: int
 
 
-class UserPostWithComments(UserPost):
-    comments: list[Comment] = []
+class UserPostWithComments(BaseModel):
     post: UserPost
+    comments: list[Comment] = Field(default_factory=list)
