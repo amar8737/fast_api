@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -23,6 +25,7 @@ class TestSettings(GlobalSettings):
     model_config = SettingsConfigDict(env_file=".env.test")
 
 
+@lru_cache
 def get_settings() -> GlobalSettings:
     env_state = Settings().ENV_STATE
 
