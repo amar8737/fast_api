@@ -1,3 +1,5 @@
+import os
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -21,3 +23,18 @@ class ProdSettings(GlobalSettings):
 
 class TestSettings(GlobalSettings):
     model_config = SettingsConfigDict(env_file=".env.test")
+
+
+def get_settings() -> GlobalSettings:
+    env_state = os.getenv("ENV_STATE", "dev").lower()
+
+    settings_map = {
+        "dev": DevSettings,
+        "prod": ProdSettings,
+        "test": TestSettings,
+    }
+
+    return settings_map.get(env_state, DevSettings)()
+
+
+settings = get_settings()
