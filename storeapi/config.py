@@ -1,5 +1,3 @@
-import os
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,7 +24,7 @@ class TestSettings(GlobalSettings):
 
 
 def get_settings() -> GlobalSettings:
-    env_state = os.getenv("ENV_STATE", "dev").lower()
+    env_state = Settings().ENV_STATE
 
     settings_map = {
         "dev": DevSettings,
